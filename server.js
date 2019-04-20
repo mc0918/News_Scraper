@@ -35,10 +35,15 @@ mongoose.connect("mongodb://localhost/NewsScraper", {
 });
 
 //Routes
-//require("./routes/api-routes")(app);
-//var routes = require("./routes/html-routes");
+var routes = require("./routes/html-routes");
+app.use(routes);
 
-//app.use(routes);
+app.get("/scrape", (req, res) => {
+  axios.get("https://www.clickhole.com/").then(response => {
+    var $ = cheerio.load(response.data);
+    console.log($);
+  });
+});
 
 //app.listen always goes at the end of your code
 app.listen(PORT, function() {
