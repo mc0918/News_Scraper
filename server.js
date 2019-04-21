@@ -45,10 +45,11 @@ app.get("/scrape", (req, res) => {
     .get("http://www.northwesternflipside.net/author/mcampbell/")
     .then(response => {
       var $ = cheerio.load(response.data);
-      //console.log(response.data);
-      var result = [{}];
-      $("article").each((i, element) => {
-        //var result = [];
+
+      //var result = [{}];
+      $("#content article").each((i, element) => {
+        var result = {};
+        //console.log("ELEMENT: ", element);
 
         result.title = $(element)
           .find("h2.post-title")
@@ -69,15 +70,22 @@ app.get("/scrape", (req, res) => {
           .find("img")
           .attr("src");
 
-        //console.log(result);
-        result.push({
-          title: result.title,
-          summary: result.summary,
-          url: result.url,
-          image: result.image
-        });
+        // result.push({
+        //   title: result.title,
+        //   summary: result.summary,
+        //   url: result.url,
+        //   image: result.image
+        // });
+
+        db.Article.create(result)
+          .then(dbArticle => {
+            console.log(dbArticle);
+          })
+          .catch(err => {
+            console.log(err);
+          });
       });
-      console.log(result);
+      //console.log(result);
       res.send("scrape complete");
     });
 });
