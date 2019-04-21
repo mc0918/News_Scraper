@@ -8,6 +8,9 @@ var mongoose = require("mongoose");
 var axios = require("axios");
 var cheerio = require("cheerio");
 
+var db = require("./models");
+
+var PORT = 3000;
 // Initialize Express
 var app = express();
 
@@ -16,7 +19,6 @@ var app = express();
 // Use morgan logger for logging requests
 app.use(logger("dev"));
 
-var PORT = process.env.PORT || 8080;
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
@@ -39,10 +41,45 @@ var routes = require("./routes/html-routes");
 app.use(routes);
 
 app.get("/scrape", (req, res) => {
-  axios.get("https://www.clickhole.com/").then(response => {
-    var $ = cheerio.load(response.data);
-    console.log($);
-  });
+  axios
+    .get("http://www.northwesternflipside.net/author/mcampbell/")
+    .then(response => {
+      var $ = cheerio.load(response.data);
+      //console.log(response.data);
+      var result = [{}];
+      $("article").each((i, element) => {
+        //var result = [];
+
+        result.title = $(element)
+          .find("h2.post-title")
+          .find("a")
+          .text();
+
+        result.summary = $(element)
+          .find("div.entry")
+          .find("p")
+          .text();
+
+        result.url = $(element)
+          .find("h2.post-title")
+          .find("a")
+          .attr("href");
+
+        result.image = $(element)
+          .find("img")
+          .attr("src");
+
+        //console.log(result);
+        result.push({
+          title: result.title,
+          summary: result.summary,
+          url: result.url,
+          image: result.image
+        });
+      });
+      console.log(result);
+      res.send("scrape complete");
+    });
 });
 
 //app.listen always goes at the end of your code
