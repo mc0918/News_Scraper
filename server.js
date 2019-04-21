@@ -46,10 +46,8 @@ app.get("/scrape", (req, res) => {
     .then(response => {
       var $ = cheerio.load(response.data);
 
-      //var result = [{}];
       $("#content article").each((i, element) => {
         var result = {};
-        //console.log("ELEMENT: ", element);
 
         result.title = $(element)
           .find("h2.post-title")
@@ -70,13 +68,6 @@ app.get("/scrape", (req, res) => {
           .find("img")
           .attr("src");
 
-        // result.push({
-        //   title: result.title,
-        //   summary: result.summary,
-        //   url: result.url,
-        //   image: result.image
-        // });
-
         db.Article.create(result)
           .then(dbArticle => {
             console.log(dbArticle);
@@ -86,6 +77,39 @@ app.get("/scrape", (req, res) => {
           });
       });
       res.send("scrape complete");
+    });
+});
+
+// Route for getting all Articles from the db
+app.get("/articles", function(req, res) {
+  db.Article.find({}, function(err, data) {
+    console.log(data);
+    res.json(data);
+  });
+});
+
+app.get("/articles/:id", (req, res) => {
+  var id = req.params.id;
+
+  db.Article.findOne({ _id: id })
+    .populate("comment")
+    .then(dbArticle => {
+      res.json(dbArticle);
+    });
+});
+
+app.post("/articles/:id", (req, res) => {
+  var id = req.params.id;
+  db.Comment.create({ title: req.body.title, body: req.body.body })
+    .then(dbComment => {
+      return db.Article.findOneAndUpdate(
+        { _id: id },
+        { $push: { comment: dbComment._id } },
+        { new: true }
+      );
+    })
+    .then(dbArticle => {
+      res.json(dbArticle);
     });
 });
 

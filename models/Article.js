@@ -31,12 +31,12 @@ var ArticleSchema = new Schema({
   created_at: {
     type: Date,
     default: Date.now
-  }
+  },
   //Needed when making notes correspond to articles
-  //   note: {
-  //     type: Schema.Types.ObjectId,
-  //     ref: "Note"
-  //   }
+  comment: {
+    type: Schema.Types.ObjectId,
+    ref: "Comment"
+  }
 });
 
 // This creates our model from the above schema, using mongoose's model method
