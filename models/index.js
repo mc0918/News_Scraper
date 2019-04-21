@@ -1,1 +1,5 @@
-console.log("export stuff here");
+// Exporting an object containing all of our models
+
+module.exports = {
+  Article: require("./Article")
+};
