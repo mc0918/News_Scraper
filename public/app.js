@@ -39,12 +39,12 @@ $(".article__title").on("click", function() {
         .then(function(data) {
           // Log the response
           console.log(data);
-          // close modal?
         });
 
       // Also, remove the values entered in the input and textarea for note entry
       $("#recipient-name").val("");
       $("#message-text").val("");
+
       //========post route to change note=====================================
     });
   });
