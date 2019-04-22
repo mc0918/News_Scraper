@@ -94,14 +94,17 @@ app.get("/articles/:id", (req, res) => {
   db.Article.findOne({ _id: id })
     .populate("comment")
     .then(dbArticle => {
+      console.log("ARTICLES: ", dbArticle);
       res.json(dbArticle);
     });
 });
 
 app.post("/articles/:id", (req, res) => {
   var id = req.params.id;
+  console.log(req.body);
   db.Comment.create({ title: req.body.title, body: req.body.body })
     .then(dbComment => {
+      console.log(dbComment);
       return db.Article.findOneAndUpdate(
         { _id: id },
         { $push: { comment: dbComment._id } },
@@ -111,6 +114,14 @@ app.post("/articles/:id", (req, res) => {
     .then(dbArticle => {
       res.json(dbArticle);
     });
+});
+
+app.post("/comments/:id", (req, res) => {
+  var id = req.params.id;
+  db.comments.find({ _id: id }, function(err, data) {
+    if (err) throw err;
+    res.json(data);
+  });
 });
 
 //app.listen always goes at the end of your code
