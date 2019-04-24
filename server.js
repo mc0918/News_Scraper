@@ -118,7 +118,7 @@ app.post("/articles/:id", (req, res) => {
 
 app.post("/comments/:id", (req, res) => {
   var id = req.params.id;
-  db.comments.find({ _id: id }, function(err, data) {
+  db.Comment.find({ _id: id }, function(err, data) {
     if (err) throw err;
     res.json(data);
   });

@@ -9,10 +9,20 @@ $(".article__title").on("click", function() {
   //   });
 
   $.get({ url: `/articles/${thisId}` }).then(data => {
-    console.log("DATA:", data.comment.body);
+    console.log("DATA:", data.comment);
     $("#submit").removeAttr("data-id");
+    $(".commentSection").empty();
+
     $("#submit").attr("data-id", data._id);
-    $("#comments").html(data.comment.title);
+    var commentBody = data.comment.body;
+    $(".commentSection").append(commentBody);
+
+    for (i = 0; i < data.comment.length; i++) {
+      console.log(data.comment[i]);
+      $.get({ url: `articles/comments/${data.comment[i]}` }).then(data => {
+        $("#commentSection").append(data);
+      });
+    }
   });
   //Stored comments should be shown somewhere else...
   // if (data.comment) {
