@@ -1,7 +1,7 @@
 <h1>Articles</h1>
 
 <ul>
-    {{#each articles}}
+    {{#each collection.data}}
     <li>
         <h3 data-toggle="modal" data-target="#exampleModal" class="article__title" data-id={{this._id}}>
             {{this.title}}
@@ -18,7 +18,7 @@
 {{!-- MODAL --}}
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Add a Comment</h5>
@@ -35,6 +35,14 @@
                     <div class="form-group">
                         <label for="message-text" class="col-form-label">Comment:</label>
                         <textarea class="form-control" id="message-text"></textarea>
+                    </div>
+                    <hr />
+                    <div class="jumbotron jumbotron-fluid">
+                        <div class="container">
+                            <h1 class="display-4">Fluid jumbotron</h1>
+                            <p class="lead commentSection"></p>
+                            {{!-- <p>{{collection.response}}</p> --}}
+                        </div>
                     </div>
                 </form>
             </div>
