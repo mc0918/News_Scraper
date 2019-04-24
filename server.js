@@ -77,6 +77,7 @@ app.get("/scrape", (req, res) => {
           });
       });
       res.send("scrape complete");
+      res.redirect("/");
     });
 });
 

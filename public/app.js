@@ -15,14 +15,18 @@ $(".article__title").on("click", function() {
 
     $("#submit").attr("data-id", data._id);
     var commentBody = data.comment.body;
-    $(".commentSection").append(commentBody);
+    var commentTitle = data.comment.title;
 
-    for (i = 0; i < data.comment.length; i++) {
-      console.log(data.comment[i]);
-      $.get({ url: `articles/comments/${data.comment[i]}` }).then(data => {
-        $("#commentSection").append(data);
-      });
-    }
+    var title = $("<p>").html(`<b>${commentTitle}</b> <br/>`);
+    var comment = $("<p>").html(commentBody + "<br/>");
+    $(".commentSection").append(title, comment);
+
+    // for (i = 0; i < data.comment.length; i++) {
+    //   console.log(data.comment[i]);
+    //   $.get({ url: `articles/comments/${data.comment[i]}` }).then(data => {
+    //     $("#commentSection").append(data);
+    //   });
+    // }
   });
   //Stored comments should be shown somewhere else...
   // if (data.comment) {
