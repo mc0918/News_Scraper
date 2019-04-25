@@ -2,10 +2,10 @@ var express = require("express");
 var router = express.Router();
 var db = require("../models");
 
+//Serves the home page and stores the articles and comments collections as objects passed to handlebars
 router.get("/", function(req, res) {
   db.Article.find({}, function(err, data) {
     console.log(data);
-    //res.render("index", { articles: data });
   }).then(function(data) {
     db.Comment.find({}, function(err, response) {
       console.log("COMMENT RESPONSE: ", response);
@@ -13,9 +13,5 @@ router.get("/", function(req, res) {
     });
   });
 });
-
-// function getComment() {
-//   db.Comment.find({}, function(err, response) {});
-// }
 
 module.exports = router;
