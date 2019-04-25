@@ -1,12 +1,5 @@
 $(".article__title").on("click", function() {
-  //   //$("#comments").empty() //un-comment this when comment part is made
   var thisId = $(this).attr("data-id");
-  //$("#comments").html("Howdy folks");
-
-  //   $.get({ url: `/comments/${thisId}` }).then(data => {
-  //     console.log(data);
-  //     $("#comments").append(data);
-  //   });
 
   $.get({ url: `/articles/${thisId}` }).then(data => {
     console.log("DATA:", data.comment);
@@ -28,13 +21,6 @@ $(".article__title").on("click", function() {
     //   });
     // }
   });
-  //Stored comments should be shown somewhere else...
-  // if (data.comment) {
-  //   // Place the title of the comment in the title input
-  //   $("#recipient-name").val(data.comment.title);
-  //   // Place the body of the comment in the body textarea
-  //   $("#message-text").val(data.comment.body);
-  //}
 
   $("#submit").on("click", function() {
     console.log($("#message-text").val());
