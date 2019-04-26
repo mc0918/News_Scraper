@@ -33,7 +33,7 @@ app.use(express.static("public"));
 
 // Database configuration
 var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/NewsScraper";
-mongoose.connect(MONGODB_URI);
+mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
 // mongoose.connect("mongodb://localhost/NewsScraper", {
 //   useNewUrlParser: true
 // });
