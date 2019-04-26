@@ -1,4 +1,5 @@
 <h1>Articles</h1>
+<h3>Click on a headline to leave a comment </h3>
 
 <ul>
     {{#each collection.data}}
@@ -9,6 +10,7 @@
         <p class="body__text">
             {{this.summary}}
         </p>
+        <a href={{this.url}} type="button" class="btn btn-link">Full Article</a>
     </li>
     {{/each}}
 </ul>
