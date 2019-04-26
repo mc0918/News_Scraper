@@ -10,7 +10,7 @@ var cheerio = require("cheerio");
 
 var db = require("./models");
 
-var PORT = 3000;
+//var PORT = 3000;
 // Initialize Express
 var app = express();
 
@@ -128,6 +128,6 @@ app.post("/comments/:id", (req, res) => {
 });
 
 //app.listen always goes at the end of your code
-app.listen(PORT, function() {
+app.listen(process.env.PORT || 3000, function() {
   console.log("App listening on PORT:" + PORT);
 });
