@@ -32,9 +32,11 @@ app.set("view engine", "handlebars");
 app.use(express.static("public"));
 
 // Database configuration
-mongoose.connect("mongodb://localhost/NewsScraper", {
-  useNewUrlParser: true
-});
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/NewsScraper";
+mongoose.connect(MONGODB_URI);
+// mongoose.connect("mongodb://localhost/NewsScraper", {
+//   useNewUrlParser: true
+// });
 
 //Routes
 var routes = require("./routes/html-routes");

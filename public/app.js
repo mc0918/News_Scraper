@@ -2,7 +2,7 @@ $(".article__title").on("click", function() {
   var thisId = $(this).attr("data-id");
 
   $.get({ url: `/articles/${thisId}` }).then(data => {
-    console.log("DATA:", data.comment);
+    console.log("DATA:", data);
     $("#submit").removeAttr("data-id");
     $(".commentSection").empty();
 
